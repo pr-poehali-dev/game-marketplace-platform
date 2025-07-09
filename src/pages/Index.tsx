@@ -3,58 +3,57 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import Icon from "@/components/ui/icon";
 import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useState } from "react";
 
 const Index = () => {
-  const gameItems = [
-    {
-      id: 1,
-      name: "Legendary Sword +15",
-      game: "MMORPG Online",
-      price: "2,500 ₽",
-      seller: "ProGamer2024",
-      rating: 5,
-      image: "🗡️",
-      category: "Weapons",
-    },
-    {
-      id: 2,
-      name: "Rare Diamond Armor Set",
-      game: "Fantasy Quest",
-      price: "4,200 ₽",
-      seller: "ItemMaster",
-      rating: 5,
-      image: "🛡️",
-      category: "Armor",
-    },
-    {
-      id: 3,
-      name: "1000 Gold Coins",
-      game: "Strategy Empire",
-      price: "350 ₽",
-      seller: "CoinDealer",
-      rating: 4,
-      image: "🪙",
-      category: "Currency",
-    },
-    {
-      id: 4,
-      name: "Elite Gaming Account",
-      game: "Battle Royale",
-      price: "15,000 ₽",
-      seller: "AccountPro",
-      rating: 5,
-      image: "👤",
-      category: "Accounts",
-    },
-  ];
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
-  const categories = [
-    { name: "Оружие", icon: "Sword", count: "245+" },
-    { name: "Броня", icon: "Shield", count: "189+" },
-    { name: "Валюта", icon: "Coins", count: "567+" },
-    { name: "Аккаунты", icon: "User", count: "89+" },
-    { name: "Услуги", icon: "Zap", count: "156+" },
-    { name: "Редкие предметы", icon: "Star", count: "78+" },
+  const gameCategories = [
+    {
+      name: "CS:GO / CS2",
+      icon: "Target",
+      count: "0",
+      description: "Скины, ножи, перчатки",
+    },
+    {
+      name: "Dota 2",
+      icon: "Zap",
+      count: "0",
+      description: "Сеты, аркана, иммортал",
+    },
+    {
+      name: "Roblox",
+      icon: "Users",
+      count: "0",
+      description: "Аккаунты, робуксы, предметы",
+    },
+    {
+      name: "Valorant",
+      icon: "Crosshair",
+      count: "0",
+      description: "Скины оружия, аккаунты",
+    },
+    {
+      name: "Fortnite",
+      icon: "Shield",
+      count: "0",
+      description: "Скины, В-баксы, аккаунты",
+    },
+    {
+      name: "Minecraft",
+      icon: "Box",
+      count: "0",
+      description: "Аккаунты, сервера, моды",
+    },
   ];
 
   return (
@@ -76,14 +75,106 @@ const Index = () => {
             </div>
 
             <div className="flex items-center space-x-3">
-              <Button variant="outline" size="sm">
-                <Icon name="LogIn" size={16} className="mr-2" />
-                Войти
-              </Button>
-              <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700">
-                <Icon name="UserPlus" size={16} className="mr-2" />
-                Регистрация
-              </Button>
+              <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <Icon name="LogIn" size={16} className="mr-2" />
+                    Войти
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Вход в аккаунт</DialogTitle>
+                    <DialogDescription>
+                      Войдите в свой аккаунт, чтобы покупать и продавать игровые
+                      товары
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="text-sm font-medium">Email</label>
+                      <Input placeholder="ваш@email.com" type="email" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">Пароль</label>
+                      <Input placeholder="Введите пароль" type="password" />
+                    </div>
+                    <Button className="w-full bg-indigo-600 hover:bg-indigo-700">
+                      Войти
+                    </Button>
+                    <p className="text-sm text-center text-gray-500">
+                      Нет аккаунта?{" "}
+                      <button
+                        onClick={() => {
+                          setIsLoginOpen(false);
+                          setIsRegisterOpen(true);
+                        }}
+                        className="text-indigo-600 hover:underline"
+                      >
+                        Зарегистрироваться
+                      </button>
+                    </p>
+                  </div>
+                </DialogContent>
+              </Dialog>
+
+              <Dialog open={isRegisterOpen} onOpenChange={setIsRegisterOpen}>
+                <DialogTrigger asChild>
+                  <Button
+                    size="sm"
+                    className="bg-indigo-600 hover:bg-indigo-700"
+                  >
+                    <Icon name="UserPlus" size={16} className="mr-2" />
+                    Регистрация
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Создать аккаунт</DialogTitle>
+                    <DialogDescription>
+                      Присоединяйтесь к GameMarket и начните торговать без
+                      комиссий
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="text-sm font-medium">
+                        Имя пользователя
+                      </label>
+                      <Input placeholder="Ваш никнейм" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">Email</label>
+                      <Input placeholder="ваш@email.com" type="email" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">Пароль</label>
+                      <Input placeholder="Создайте пароль" type="password" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">
+                        Подтвердите пароль
+                      </label>
+                      <Input placeholder="Повторите пароль" type="password" />
+                    </div>
+                    <Button className="w-full bg-indigo-600 hover:bg-indigo-700">
+                      Создать аккаунт
+                    </Button>
+                    <p className="text-sm text-center text-gray-500">
+                      Уже есть аккаунт?{" "}
+                      <button
+                        onClick={() => {
+                          setIsRegisterOpen(false);
+                          setIsLoginOpen(true);
+                        }}
+                        className="text-indigo-600 hover:underline"
+                      >
+                        Войти
+                      </button>
+                    </p>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
         </div>
@@ -129,110 +220,82 @@ const Index = () => {
       </section>
 
       <div className="container mx-auto px-4 py-12">
-        {/* Categories */}
+        {/* Game Categories */}
         <section className="mb-16">
           <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-            Категории товаров
+            Популярные игры
           </h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {categories.map((category, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {gameCategories.map((game, index) => (
               <Card
                 key={index}
                 className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
               >
-                <CardContent className="p-6 text-center">
-                  <div className="bg-gradient-to-r from-indigo-500 to-purple-500 p-3 rounded-full inline-block mb-4 group-hover:scale-110 transition-transform">
-                    <Icon
-                      name={category.icon}
-                      className="text-white"
-                      size={24}
-                    />
+                <CardContent className="p-6">
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-gradient-to-r from-indigo-500 to-purple-500 p-3 rounded-full group-hover:scale-110 transition-transform">
+                      <Icon name={game.icon} className="text-white" size={24} />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-gray-900 mb-1">
+                        {game.name}
+                      </h4>
+                      <p className="text-sm text-gray-500 mb-2">
+                        {game.description}
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {game.count} активных предложений
+                      </p>
+                    </div>
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-1">
-                    {category.name}
-                  </h4>
-                  <p className="text-sm text-gray-500">
-                    {category.count} товаров
-                  </p>
                 </CardContent>
               </Card>
             ))}
           </div>
         </section>
 
-        {/* Popular Items */}
+        {/* Empty State - No Items */}
         <section>
-          <div className="flex items-center justify-between mb-8">
-            <h3 className="text-2xl font-bold text-gray-900">
-              🔥 Популярные товары
-            </h3>
-            <Button variant="outline">
-              Показать все
-              <Icon name="ArrowRight" size={16} className="ml-2" />
-            </Button>
-          </div>
+          <div className="text-center py-16">
+            <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-3xl p-12 max-w-2xl mx-auto">
+              <div className="text-6xl mb-6">🎮</div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Товаров пока нет
+              </h3>
+              <p className="text-lg text-gray-600 mb-8">
+                Только зарегистрированные пользователи могут размещать товары на
+                продажу. Станьте первым продавцом на нашей площадке!
+              </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {gameItems.map((item) => (
-              <Card
-                key={item.id}
-                className="hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group cursor-pointer"
-              >
-                <CardContent className="p-0">
-                  {/* Item Image */}
-                  <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-8 text-center relative overflow-hidden">
-                    <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">
-                      {item.image}
-                    </div>
-                    <Badge className="absolute top-4 right-4 bg-green-500 hover:bg-green-600">
-                      {item.category}
-                    </Badge>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-500 mb-8">
+                  <div className="flex items-center justify-center space-x-2">
+                    <Icon name="Shield" size={16} className="text-green-500" />
+                    <span>Безопасные сделки</span>
                   </div>
-
-                  {/* Item Info */}
-                  <div className="p-6">
-                    <h4 className="font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">
-                      {item.name}
-                    </h4>
-                    <p className="text-sm text-gray-500 mb-3">{item.game}</p>
-
-                    {/* Seller Info */}
-                    <div className="flex items-center mb-4">
-                      <div className="bg-gray-100 p-1 rounded-full mr-2">
-                        <Icon name="User" size={14} className="text-gray-600" />
-                      </div>
-                      <span className="text-sm text-gray-600">
-                        {item.seller}
-                      </span>
-                      <div className="flex items-center ml-auto">
-                        {[...Array(item.rating)].map((_, i) => (
-                          <Icon
-                            key={i}
-                            name="Star"
-                            size={12}
-                            className="text-yellow-400 fill-current"
-                          />
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Price and Buy */}
-                    <div className="flex items-center justify-between">
-                      <span className="text-2xl font-bold text-indigo-600">
-                        {item.price}
-                      </span>
-                      <Button
-                        size="sm"
-                        className="bg-indigo-600 hover:bg-indigo-700"
-                      >
-                        <Icon name="ShoppingCart" size={16} className="mr-1" />
-                        Купить
-                      </Button>
-                    </div>
+                  <div className="flex items-center justify-center space-x-2">
+                    <Icon name="Zap" size={16} className="text-blue-500" />
+                    <span>Без комиссий</span>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
+                  <div className="flex items-center justify-center space-x-2">
+                    <Icon name="Users" size={16} className="text-purple-500" />
+                    <span>Только от людей</span>
+                  </div>
+                </div>
+
+                <Dialog open={isRegisterOpen} onOpenChange={setIsRegisterOpen}>
+                  <DialogTrigger asChild>
+                    <Button
+                      size="lg"
+                      className="bg-indigo-600 hover:bg-indigo-700"
+                    >
+                      <Icon name="UserPlus" size={20} className="mr-2" />
+                      Зарегистрироваться и продать первый товар
+                    </Button>
+                  </DialogTrigger>
+                </Dialog>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -244,21 +307,29 @@ const Index = () => {
             проверенных продавцов
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              className="bg-white text-indigo-600 hover:bg-gray-50"
-            >
-              <Icon name="UserPlus" size={20} className="mr-2" />
-              Создать аккаунт
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-indigo-600"
-            >
-              <Icon name="Plus" size={20} className="mr-2" />
-              Разместить товар
-            </Button>
+            <Dialog open={isRegisterOpen} onOpenChange={setIsRegisterOpen}>
+              <DialogTrigger asChild>
+                <Button
+                  size="lg"
+                  className="bg-white text-indigo-600 hover:bg-gray-50"
+                >
+                  <Icon name="UserPlus" size={20} className="mr-2" />
+                  Создать аккаунт
+                </Button>
+              </DialogTrigger>
+            </Dialog>
+            <Dialog open={isRegisterOpen} onOpenChange={setIsRegisterOpen}>
+              <DialogTrigger asChild>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-white text-white hover:bg-white hover:text-indigo-600"
+                >
+                  <Icon name="Plus" size={20} className="mr-2" />
+                  Разместить товар
+                </Button>
+              </DialogTrigger>
+            </Dialog>
           </div>
         </section>
       </div>
